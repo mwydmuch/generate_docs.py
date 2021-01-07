@@ -1,0 +1,7 @@
+*.tsv
+*.csv
+*.pdf
+*.odt
+*.png
+*.jpg
+.idea
