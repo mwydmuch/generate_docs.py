@@ -14,6 +14,14 @@ Options:
   -d, --delimiter TEXT        Delimiter for address book file.
                               [default: '\t']
 
-  -o, --output_template TEXT  Output file path template.  [required]
+  -o, --output_template TEXT  Output file path template. It should have odt,
+                              pdf, png, or jpg extension.  [required]
+
+  -k, --keep_odt              Keep odt instead of removing them after
+                              conversion to the final file format.
+
   --help                      Show this message and exit.
 ```
+
+
+python3 generate_docs.py -t certificates_template.odt -c content.csv -o "certificates/{filename}.pdf"

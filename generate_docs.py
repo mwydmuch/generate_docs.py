@@ -57,8 +57,9 @@ def replace_in_doc(in_path, out_path, to_replace):
 @click.option("-t", "--template_path", type=str, required=True, help="Path to ODT file with {} fields.")
 @click.option("-c", "--content_path", type=str, required=True, help="Path to TSV or CSV file with data for the template.")
 @click.option("-d", "--delimiter", type=str, default="\t", help="Delimiter for address book file.\t[default: '\\t']")
-@click.option("-o", "--output_template", type=str, required=True, help="Output file path template.")
-def generate_docs(template_path: str, content_path: str, delimiter: str, output_template: str):
+@click.option("-o", "--output_template", type=str, required=True, help="Output file path template. It should have odt, pdf, png, or jpg extension.")
+@click.option("-k", "--keep_odt", type=bool, is_flag=True, help="Keep odt instead of removing them after conversion to the final file format.")
+def generate_docs(template_path: str, content_path: str, delimiter: str, output_template: str, keep_odt: bool):
     # Check if conversion via lowriter to pdf/png/jpg is supported
     r_value = os.system("lowriter --version")
     lowriter = True
@@ -83,7 +84,8 @@ def generate_docs(template_path: str, content_path: str, delimiter: str, output_
                 output_ext = output_path[-3:]
                 os.system("lowriter --convert-to {} {}".format(output_ext, odt_output_path))
                 os.rename(os.path.basename(output_path), output_path)
-                os.remove(odt_output_path)
+                if not keep_odt:
+                    os.remove(odt_output_path)
 
             print("Successfully save file to:", output_path)
 
